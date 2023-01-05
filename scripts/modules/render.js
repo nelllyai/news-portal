@@ -1,8 +1,8 @@
 import { createCard } from "./create.js";
 import fetchRequest from "./fetchRequest.js";
 
-export const renderHeadlines = count => {
-  return fetchRequest('https://newsapi.org/v2/top-headlines?country=ru', {
+export const renderHeadlines = (country, count) => {
+  return fetchRequest(`https://newsapi.org/v2/top-headlines?country=${country}`, {
     method: 'GET',
     headers: {
       'X-Api-Key': '9ab5ff18e158417294f8065e87ce9a23'
@@ -27,8 +27,8 @@ export const renderHeadlines = count => {
   });
 };
 
-export const renderNews = (request, count) => {
-  return fetchRequest(`https://newsapi.org/v2/everything?q=${request}`, {
+export const renderNews = (phrase, count) => {
+  return fetchRequest(`https://newsapi.org/v2/everything?q=${phrase}`, {
     method: 'GET',
     headers: {
       'X-Api-Key': '9ab5ff18e158417294f8065e87ce9a23'
@@ -42,7 +42,7 @@ export const renderNews = (request, count) => {
       const template = document.createDocumentFragment();
       const title = document.createElement('h2');
       title.className = 'title';
-      title.textContent = `По вашему запросу "${request}" найдено ${count} результатов`;
+      title.textContent = `По вашему запросу "${phrase}" найдено ${count} результатов`;
       const articles = data.articles.slice(0, count);
       const allArticles = articles.map(createCard);
       
